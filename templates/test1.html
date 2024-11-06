@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+<body>
+
+<h1>Google Map</h1>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzfJHU7mKkVKW9nTVPymNY-0emhlP-0DQ&libraries=drawing"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
+<div id="map"></div>
+<style type="text/css">
+#map {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+}
+
+#logo {
+
+  position: absolute;
+  padding: 10px;
+  width: 200px;
+  font-size: 24px;
+  background-color: rgba(255, 255, 255, 0.9);
+  left: 50%;
+  margin: 20px 0 0 -100px;
+  text-align: center;
+}
+
+#newPos {
+  position: absolute;
+  left: 50%;
+  margin: 14px 0 0 -135px;
+}
+
+.gmnoprint {
+  display: none;
+}
+</style>
+<script>
+var myOptions = {
+  zoom: 11,
+  center: new google.maps.LatLng(36.236797, -112.956333),
+  disableDefaultUI: true,
+  mapTypeId: 'terrain'
+}
+
+var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+var drawingManager = new google.maps.drawing.DrawingManager({
+  drawingMode: google.maps.drawing.OverlayType.CIRCLE,
+  drawingControl: true,
+  drawingControlOptions: {
+    drawingModes: [
+      google.maps.drawing.OverlayType.CIRCLE
+    ]
+  },
+  circleOptions: {
+    fillColor: '#ffff00',
+    fillOpacity: 1,
+    strokeWeight: 5,
+    clickable: false,
+    editable: true,
+    zIndex: 1
+  }
+});
+drawingManager.setMap(map);
+
+
+google.maps.event.addDomListener(map, 'tilesloaded', function() {
+  if ($('#newPos').length == 0) {
+    $('div.gmnoprint').last().wrap('<div id="newPos" />');
+    $('div.gmnoprint').fadeIn(500);
+  }
+});
+
+var setPos = function() {
+  google.maps.event.trigger(map, 'tilesloaded');
+};
+
+window.setTimeout(setPos, 1000);
+</script>
+</body>
+</html>

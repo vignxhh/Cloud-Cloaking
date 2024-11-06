@@ -1,0 +1,15 @@
+CREATE OR REPLACE PROCEDURE get_teacher_details (
+  p_staffid IN teachers.staffid%TYPE,
+  p_staffname OUT teachers.staffname%TYPE,
+  p_dept OUT teachers.dept%TYPE,
+  p_qualification OUT teachers.qualification%TYPE,
+  p_sal OUT teachers.sal%TYPE
+)
+AS
+BEGIN
+  SELECT staffname, dept, qualification, sal
+  INTO p_staffname, p_dept, p_qualification, p_sal
+  FROM teachers
+  WHERE staffid = p_staffid;
+END;
+/
